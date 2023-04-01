@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.example.demo.auth.mapper.TokenInfoCustomMapper">
+
+	<resultMap id="tokenDetails"
+		type="com.example.demo.auth.model.TokenInfoDto">
+		<result column="user_name" property="userName" />
+		<result column="token_str" property="tokenStr" />
+		<result column="expiration" property="expiration" />
+	</resultMap>
+
+	<select id="getTokenInfo" resultMap="tokenDetails">
+		select
+		user_name,token_str,expiration from token_info where
+		token_str=#{tokenStr} ;
+	</select>
+
+	<select id="getTokenInfoByUserName" parameterType="java.util.Map"
+		resultMap="tokenDetails">
+		select user_name,token_str,expiration from token_info where
+		user_name=#{userName} ;
+	</select>
+
+	<insert id="addTokenInfo">
+		INSERT INTO public.token_info
+		(token_str, user_name,
+		expiration)
+		VALUES(#{tokenStr}, #{userName}, #{expiration});
+	</insert>
+
+	<update id="updateTokenInfo">
+		UPDATE public.token_info
+		SET token_str=#{tokenStr},
+		expiration=#{expiration}
+		WHERE user_name=#{userName};
+	</update>
+
+</mapper>

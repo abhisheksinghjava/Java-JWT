@@ -1,0 +1,7 @@
+curl --location --request POST 'http://localhost:8080/demo-service/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{"userName":"abhisheksingh","password":"1234567"}'
+
+curl --location --request POST 'http://localhost:8080/demo-service/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{"userName":"abhisheksingh","password":"1234567"}'

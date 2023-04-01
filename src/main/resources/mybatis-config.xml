@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- MyBatis Common setting -->
+	<settings>
+		<!--MyBatis Disable internal entity cache (cache should be implemented 
+			in MS template Cache-Aside pattern) -->
+		<setting name="cacheEnabled" value="false" />
+		<setting name="localCacheScope" value="STATEMENT" />
+
+		<setting name="autoMappingUnknownColumnBehavior"
+			value="FAILING" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="logImpl" value="SLF4J" />
+	</settings>
+
+	<!-- Mapper List of packages that store I / O data classes used in -->
+	<typeAliases>
+		<package name="com.example.demo.auth.model" />
+	</typeAliases>
+
+	<mappers>
+		<package name="com.example.demo.auth.mapper" />
+	</mappers>
+
+</configuration>

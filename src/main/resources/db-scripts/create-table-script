@@ -1,0 +1,43 @@
+-- public."user" definition
+
+-- Drop table
+
+-- DROP TABLE public."user";
+
+CREATE TABLE public."user" (
+	user_id numeric(10) NOT NULL DEFAULT nextval('user_id_seq'::regclass),
+	user_name varchar(64) NOT NULL,
+	"password" varchar(70) NULL,
+	pw_change_dte_tme timestamp NULL,
+	created_by varchar(10) NULL,
+	created_dte timestamp NULL,
+	updated_by varchar(10) NULL,
+	updated_dte timestamp NULL,
+	CONSTRAINT user_pkey PRIMARY KEY (user_id, user_name)
+);
+
+-- public.token_info definition
+
+-- Drop table
+
+-- DROP TABLE public.token_info;
+
+CREATE TABLE public.token_info (
+	token_str varchar(150) NOT NULL,
+	user_name varchar(64) NOT NULL,
+	expiration numeric(15) NOT NULL
+);
+CREATE INDEX token_info_user_name ON public.token_info USING btree (user_name);
+
+
+-- public.user_id_seq definition
+
+-- DROP SEQUENCE public.user_id_seq;
+
+CREATE SEQUENCE public.user_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 999999999
+	START 1
+	CACHE 1
+	NO CYCLE;
