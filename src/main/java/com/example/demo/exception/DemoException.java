@@ -13,11 +13,11 @@ package com.example.demo.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * The ISPException.
+ * The DemoException.
  *
  * @author - abhishek.singh@abc.com
  * @createdAt 28 April, 2021
- * @description ISPException class.
+ * @description DemoException class.
  */
 public class DemoException extends Exception {
 
@@ -34,7 +34,7 @@ public class DemoException extends Exception {
 	protected HttpStatus httpStatus;
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 *
 	 * @param errorMsg   the error msg
 	 * @param errorCode  the error code
@@ -48,14 +48,14 @@ public class DemoException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 */
 	public DemoException() {
 
 	}
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 *
 	 * @param errorMsg  the error msg
 	 * @param errorCode the error code
@@ -67,7 +67,7 @@ public class DemoException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 *
 	 * @param errorMsg the error msg
 	 */
@@ -77,7 +77,7 @@ public class DemoException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 *
 	 * @param message the message
 	 * @param cause   the cause
@@ -87,7 +87,7 @@ public class DemoException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new ISP exception.
+	 * Instantiates a new DemoException.
 	 *
 	 * @param cause the cause
 	 */
