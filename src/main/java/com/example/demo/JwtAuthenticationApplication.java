@@ -25,6 +25,7 @@ public class JwtAuthenticationApplication {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		
 		SpringApplication.run(JwtAuthenticationApplication.class, args);
 	}
 
