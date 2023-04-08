@@ -12,6 +12,8 @@ package com.example.demo.user.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.user.service.UserService;
 
 /**
  * The Class UserController.
@@ -36,8 +40,20 @@ public class UserController {
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+	
+	/** The user service. */
+	@Autowired
+	private UserService userService;
 
+	/**
+	 * Gets the user detail by username.
+	 *
+	 * @param userName the user name
+	 * @return the user detail by username
+	 * @throws Exception the exception
+	 */
 	@GetMapping(value = "/user/{userName}")
+	@NewSpan("UserController.getUserDetailByUsername")
 	public ResponseEntity<String> getUserDetailByUsername(@PathVariable("userName") String userName)
 			throws Exception {
 		if (LOGGER.isTraceEnabled()) {
@@ -46,7 +62,7 @@ public class UserController {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(new StringBuilder("Input parameter: userName: ").append(userName).toString());
 		}
-		 final String resp=new StringBuilder(userName).append(" get successfully.").toString();
+		 final String resp=userService.getUserDetailByUsername(userName);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(new StringBuilder("Output parameter: resp: ").append(resp).toString());
