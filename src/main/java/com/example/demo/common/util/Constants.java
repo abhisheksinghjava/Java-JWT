@@ -84,6 +84,12 @@ public final class Constants {
 	public static final String ERR0007 = "ERR0007";
 	/** The Constant ERR0007_MSG. */
 	public static final String ERR0007_MSG = "Invalid request.";
+	
+	/** The Constant ERR0008. */
+	public static final String ERR0008 = "ERR0008";
+	
+	/** The Constant ERR0008_MSG. */
+	public static final String ERR0008_MSG = "ERR0008_MSG";
 
 	
 	/** The Constant ERR0018. */
@@ -118,6 +124,14 @@ public final class Constants {
 	
 	/** The Constant USER_NAME. */
 	public static final String USER_NAME = "userName";
+	
+	/** The Constant NAME. */
+	public static final String NAME = "abhishek";
+	
+	/** The Constant MESSAGE_RESOURCE_FILE. */
+	public static final String MESSAGE_RESOURCE_FILE = "msg-constants.properties";
+	
+	
 	
 
 }

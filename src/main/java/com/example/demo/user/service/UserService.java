@@ -10,6 +10,8 @@
  */
 package com.example.demo.user.service;
 
+import com.example.demo.exception.DemoException;
+
 /**
  * The Interface UserService.
  *
@@ -24,7 +26,8 @@ public interface UserService {
 	 *
 	 * @param userName the user name
 	 * @return the user detail by username
+	 * @throws DemoException 
 	 */
-	String getUserDetailByUsername(final String userName);
+	String getUserDetailByUsername(final String userName) throws DemoException;
 
 }

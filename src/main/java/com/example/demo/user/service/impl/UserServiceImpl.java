@@ -13,9 +13,13 @@ package com.example.demo.user.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.common.util.Constants;
+import com.example.demo.common.util.MessagePropertyUtils;
 import com.example.demo.user.service.UserService;
+import com.example.demo.exception.DemoException;
 
 /**
  * The Class UserServiceImpl.
@@ -35,10 +39,11 @@ public class UserServiceImpl implements UserService {
 	 *
 	 * @param userName the user name
 	 * @return the user detail by username
+	 * @throws DemoException
 	 */
 	@Override
 	@NewSpan("UserServiceImpl.getUserDetailByUsername")
-	public String getUserDetailByUsername(final String userName) {
+	public String getUserDetailByUsername(final String userName) throws DemoException {
 
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("Entering into method UserServiceImpl.getUserDetailByUsername");
@@ -46,7 +51,13 @@ public class UserServiceImpl implements UserService {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(new StringBuilder("Input parameter: userName: ").append(userName).toString());
 		}
-		final String resp = new StringBuilder(userName).append(" get successfully.").toString();
+		String resp = "";
+
+		if (Constants.NAME.equalsIgnoreCase(userName)) {
+			resp = new StringBuilder(userName).append(" get successfully.").toString();
+		} else {
+			throw new DemoException(MessagePropertyUtils.getErrorMessage(Constants.ERR0008_MSG), Constants.ERR0008, HttpStatus.BAD_REQUEST);
+		}
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(new StringBuilder("Output parameter: resp: ").append(resp).toString());
