@@ -11,6 +11,7 @@
 package com.example.demo.auth.controller.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,6 +27,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * The Class WebSecurityConfig.
@@ -50,6 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
+	@Value("${jwt.route.authentication.path}")
+	private String authenticationPath;
+
 	/**
 	 * Configure global.
 	 *
@@ -70,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @return the password encoder
 	 */
 	@Bean
-	public static  PasswordEncoder passwordEncoder() {
+	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
@@ -86,6 +94,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+	@Bean
+	public CorsFilter corsFilter() {
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+		// Allow anyone and anything access.
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod(HttpMethod.OPTIONS);
+		config.addAllowedMethod(HttpMethod.GET);
+		config.addAllowedMethod(HttpMethod.POST);
+		config.addAllowedMethod(HttpMethod.PUT);
+		config.addAllowedMethod(HttpMethod.PATCH);
+		config.addAllowedMethod(HttpMethod.DELETE);
+		config.addAllowedMethod(HttpMethod.TRACE);
+		config.addAllowedMethod(HttpMethod.HEAD);
+		source.registerCorsConfiguration("/**", config);
+		return new CorsFilter(source);
+	}
+
 	/**
 	 * Configure.
 	 *
@@ -95,7 +125,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
+		httpSecurity.cors().and()
+		        //we do nt need csrf because our token are invulnerable
+		        .csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/demo-service/login", "/demo-service/register").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
@@ -108,5 +140,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+	}
+
+
+	/**
+	 * Configure.
+	 *
+	 * @param web the web
+	 */
+	@Override
+	public void configure(WebSecurity web) {
+		// AuthenticationTokenFilter will ignore the below paths
+		web.ignoring().antMatchers(HttpMethod.POST, authenticationPath)
+				// allow anonymous resource request
+				.and().ignoring().antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css",
+						"/**/*.js", "/**/**/api-docs/swagger-config", "/**/**/api-docs", "/**/**/api-docs.yml",
+						"/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**","/configuration/ui/**"
+						,"/webjars/**","/swagger-resources/**","/configuration/**");
+
 	}
 }
