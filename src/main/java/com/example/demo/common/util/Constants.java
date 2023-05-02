@@ -51,7 +51,7 @@ public final class Constants {
 	public final static String EXCEPTION_INTO = "[Exception into ";
 
 	/** The Constant EXECUTION_PUBLIC_COM_NEC. */
-	public static final String EXECUTION_PUBLIC_COM_NEC = "execution(public * com.nec..*.*(..)) ";
+	public static final String EXECUTION_PUBLIC_COM_NEC = "execution(public * com.example..*.*(..)) ";
 
 	/** The Constant USER_INFO_VALUE_EMPTY_OR_NULL. */
 	public static final String USER_INFO_VALUE_EMPTY_OR_NULL = "User Info value Empty or Null";
