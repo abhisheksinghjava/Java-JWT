@@ -1,3 +1,13 @@
+/** COPYRIGHT (C) ABC INDIA PVT.LTD.
+ * 
+ * ALL RIGHTS RESERVED BY ABC INDIA PVT.LTD., THIS PROGRAM
+ * MUST BE USED SOLELY FOR THE PURPOSE FOR WHICH IT WAS
+ * FURNISHED BY ABC INDIA PVT.LTD., NO PART OF THIS PROGRAM
+ * MAY BE REPRODUCED OR DISCLOSED TO OTHERS, IN ANY FORM
+ * WITHOUT THE PRIOR WRITTEN PERMISSION OF ABC INDIA PVT.LTD..
+ * 
+ * ABC INDIA PVT.LTD. CONFIDENTIAL AND PROPRIETARY
+ */
 package com.example.demo.aop;
 
 import org.aspectj.lang.JoinPoint;
@@ -12,7 +22,13 @@ import com.example.demo.common.util.Constants;
 
 import org.slf4j.Logger;
 
-
+/**
+ * The Class LoggingAspect.
+ *
+ * @author - abhishek.singh@abc.com
+ * @createdAt 01 April, 2023
+ * @description LoggingAspect class that is the AOP logger class.
+ */
 @Aspect
 @Component
 public class LoggingAspect {
