@@ -1,0 +1,43 @@
+===prescript-start===
+console.log('calling token api')
+var options = {
+    url: "http://localhost:8080/demo-service/login",
+    method: 'POST',
+    header: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+    body: {
+       mode: 'raw',
+       raw: JSON.stringify({
+            userName: 'abhishek',
+            password: '1234567'
+        })
+    }
+}
+console.log(options)
+pm.sendRequest(options, function(err, response){
+    if (err) {
+        console.error('Error:', err);
+    } else {
+         console.log(response)
+         var jwt = response.json().data.token;
+         console.log(jwt)
+         pm.environment.set('jwt',jwt)
+    }
+})
+
+===prescript-end===
+
+
+curl --location --request POST 'http://localhost:8080/demo-service/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{"userName":"abhisheksingh","password":"1234567"}'
+
+curl --location --request POST 'http://localhost:8080/demo-service/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{"userName":"abhisheksingh","password":"1234567"}'
+
+
+curl --location 'http://localhost:8080/demo-service/user/abhisheksingh' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmhpc2hla3NpbmdoIiwiaWF0IjoxNjgwNjA5OTM4LCJleHAiOjE2ODA2MTA4Mzh9.B4Q3Qi7MydD-w3yljlXWfJFWh4B-BfFiIzeRMyH-tTk'

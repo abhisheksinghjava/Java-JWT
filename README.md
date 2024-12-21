@@ -1,0 +1,1 @@
+#Check src/main/resources folder for project specific related things. 
